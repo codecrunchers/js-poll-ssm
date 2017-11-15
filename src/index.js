@@ -1,16 +1,17 @@
 /* eslint-disable global-require */
 'use strict'
-const pino = require('pino')
-const pretty = pino.pretty()
-const logLevel = process.env.LOG_LEVEL === undefined ? 'debug' : process.env.LOG_LEVEL
-
-pretty.pipe(process.stdout)
-const logger = pino({
-    name: 'ParamPoll',
-    safe: true,
-    level: logLevel
-}, pretty)
+const logger = require('./logger')
+const providerType = process.env.PROVIDER_TYPE
 
 logger.debug('Initialising')
-require('../provider/aws')
+
+if (providerType === 'redis') {
+    //todo
+} else if (providerType === 'local-file') {
+    //todo
+} else {
+    logger.debug("Defaulting to AWS")
+    require('../provider/aws')
+}
+
 logger.debug('Done')

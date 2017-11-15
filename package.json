@@ -3,6 +3,7 @@
     "engine-strict": true,
     "dependencies": {
         "aws-sdk": "^2.150.0",
+        "collections": "^5.0.7",
         "pino": "^4.10.1"
     },
     "description": "Refresh Parameter Store Keys/Values at Runtime",
