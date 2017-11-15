@@ -1,0 +1,22 @@
+{
+  "name": "node_ssm_refresh",
+  "version": "1.0.0",
+  "description": "Refresh Parameter Store Keys/Values at Runtime",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "AWS",
+    "SSM",
+    "key",
+    "value",
+    "refresh",
+    "properties"
+  ],
+  "author": "Planet 9",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.150.0"
+  }
+}
