@@ -1,2 +1,4 @@
 'use strict'
-require('./store.providerfactory.js')
+const provider  = require('./store.providerfactory.js')
+
+

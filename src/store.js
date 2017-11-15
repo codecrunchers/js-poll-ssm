@@ -1,12 +1,7 @@
 'use strict'
 const logger = require('./logger')
 var Dict = require('collections/dict')
-
-var dict = new Dict({
-    a: 1
-}, function(key) {
-    return "default: " + key;
-})
+var dict = new Dict({})
 
 module.exports = {
     set: function(key, value) {
