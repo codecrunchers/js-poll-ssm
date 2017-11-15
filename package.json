@@ -1,22 +1,40 @@
 {
-  "name": "node_ssm_refresh",
-  "version": "1.0.0",
-  "description": "Refresh Parameter Store Keys/Values at Runtime",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "AWS",
-    "SSM",
-    "key",
-    "value",
-    "refresh",
-    "properties"
-  ],
-  "author": "Planet 9",
-  "license": "ISC",
-  "dependencies": {
-    "aws-sdk": "^2.150.0"
-  }
+    "author": "Alan Ryan",
+    "dependencies": {
+        "aws-sdk": "^2.150.0"
+    },
+    "description": "Refresh Parameter Store Keys/Values at Runtime",
+    "devDependencies": {
+        "eslint": "^4.11.0",
+        "eslint-config-standard": "^10.2.1",
+        "eslint-plugin-import": "^2.8.0",
+        "eslint-plugin-node": "^5.2.1",
+        "eslint-plugin-promise": "^3.6.0",
+        "eslint-plugin-standard": "^3.0.1",
+        "jest": "^21.2.1",
+        "request-promise": "^4.2.2"
+    },
+    "engines": {
+        "node": ">=8"
+    },
+    "keywords": [
+        "AWS",
+        "SSM",
+        "key",
+        "value",
+        "refresh",
+        "properties"
+    ],
+    "license": "ISC",
+    "main": "index.js",
+    "name": "node_ssm_refresh",
+    "scripts": {
+        "package:create": "pkg . -t node8-win,node8-macos,node8-linux --out-dir build",
+        "package:publish": "node scripts/publish-release $GITHUB_TOKEN lmammino/webhook-tunnel $npm_package_version",
+        "release:tag": "git tag $npm_package_version && git push --tags",
+        "test": "npm run test:lint && npm run test:unit",
+        "test:lint": "eslint src test",
+        "test:unit": "jest --verbose --coverage"
+    },
+    "version": "1.0.0"
 }
