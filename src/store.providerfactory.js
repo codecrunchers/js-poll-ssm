@@ -9,9 +9,8 @@ logger.debug('Initialising Provider')
 
 if (providerType === REDIS_PROVIDER) {
     logger.debug('Redis Provider')
-    provider = require('../provider/redis')
+    require('../provider/redis')
 } else if (providerType === AWS_PROVIDER || providerType === undefined) {
     logger.debug('AWS Provider')
-    provider = require('../provider/aws')
+    require('../provider/aws')
 }
-
