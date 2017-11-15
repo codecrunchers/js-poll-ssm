@@ -2,7 +2,8 @@
     "author": "Alan Ryan",
     "engine-strict": true,
     "dependencies": {
-        "aws-sdk": "^2.150.0"
+        "aws-sdk": "^2.150.0",
+        "pino": "^4.10.1"
     },
     "description": "Refresh Parameter Store Keys/Values at Runtime",
     "devDependencies": {
