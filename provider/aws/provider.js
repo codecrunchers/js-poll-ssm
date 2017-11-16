@@ -1,22 +1,28 @@
 'use strict'
+const aws = require('../../models/aws')
 const config = require('../../config')
 const store = require('../../src/store')
-const aws = require('../../models/aws')
 const logger = require('../../src/logger')
 
 var params = {
-    Name: '/apps/poll/ssm/THE_KEY',
+    Path: config.keyPrefix,
     WithDecryption: true || false
 };
 
-const paramStorePoll = setInterval(() => {
-    logger.debug('Fetching Key %s', params.Name)
-    aws.getParameter(params, function(err, data) {
+logger.debug({
+    obj: config.pollTime
+}, 'Poll Interval Set To:')
+
+function pollFunc() {
+    aws.getParametersByPath(params, function(err, data) {
         if (err) {
             logger.error('Failed fetching key %s', err.stack); // an error occurred:
         } else {
-            logger.debug('Key fetched from ParameterStore'); // an error occurred:
-            store.set(params.Name, data.Parameter.Value)
+            logger.debug(data, 'Key fetched from ParameterStore'); // an error occurred:
+            store.set(data.Parameters)
         }
     })
-}, 1500)
+}
+
+pollFunc()
+const paramStorePoll = setInterval(() => pollFunc(), config.pollTime)

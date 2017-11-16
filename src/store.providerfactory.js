@@ -1,11 +1,12 @@
 /* eslint-disable global-require */
 'use strict'
 const logger = require('./logger')
-const providerType = process.env.PROVIDER_TYPE
+const config = require('../config')
+const providerType = config.providerType
 const REDIS_PROVIDER = 'redis'
 const AWS_PROVIDER = 'aws'
-var provider = null
-logger.debug('Initialising Provider')
+
+logger.debug({obj: config.providerType}, 'Initialising Provider')
 
 if (providerType === REDIS_PROVIDER) {
     logger.debug('Redis Provider')
