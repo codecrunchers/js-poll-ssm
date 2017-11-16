@@ -2,11 +2,11 @@
 const logger = require('./logger')
 var Dict = require('collections/dict')
 var Map = require('collections/map')
-var dict = new Dict({})
 
 module.exports = {
+    dict: new Dict({}),
     set: function(parameters) {
-        logger.debug('Set Values')
+        logger.debug({obj : parameters},'Set Values')
         let filteredParams = parameters.map((param, index, params) => {
             var entry = new Array()
             entry.add(param.Name)
@@ -14,10 +14,10 @@ module.exports = {
             return entry
         })
         const paramMap = new Map(filteredParams)
-        dict.addEach()
+        module.exports.dict.addEach(paramMap)
     },
     get: function(key) {
         logger.debug('Get %s', key)
-        dict.get(key)
+        return module.exports.dict.get(key)
     }
 }
