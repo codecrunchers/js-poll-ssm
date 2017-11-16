@@ -4,7 +4,7 @@ const config = require('../../config')
 const store = require('../../src/store')
 const logger = require('../../src/logger')
 
-var params = {
+const params = {
     Path: config.keyPrefix,
     WithDecryption: true || false
 };
@@ -26,5 +26,7 @@ function pollFunc() {
     })
 }
 
-pollFunc()
-const paramStorePoll = setInterval(() => pollFunc(), config.pollTime)
+module.exports  = (function go() {
+    pollFunc() //kick it off
+    const paramStorePoll = setInterval(() => pollFunc(), config.pollTime)
+})()
