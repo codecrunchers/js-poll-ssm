@@ -2,16 +2,25 @@
 'use strict'
 const logger = require('./logger')
 const config = require('../config')
-const providerType = config.providerType
 const REDIS_PROVIDER = 'redis'
 const AWS_PROVIDER = 'aws'
 
-logger.debug({obj: config.providerType}, 'Initialising Provider')
+logger.debug({
+    obj: config.providerType
+}, 'Initialising Provider')
 
-if (providerType === REDIS_PROVIDER) {
-    logger.debug('Redis Provider')
-    require('../provider/redis')
-} else if (providerType === AWS_PROVIDER || providerType === undefined) {
-    logger.debug('AWS Provider')
-    require('../provider/aws')
+function create(options) {
+	const providerType = config.providerType.toLowerCase()
+
+    if (providerType === REDIS_PROVIDER) {
+        require('../provider/redis')
+    } else if (providerType === AWS_PROVIDER) {
+        require('../provider/aws')
+    }else {
+		logger.error("Cannot Create Provider")
+		throw new Error("Invalid Provider Specified '" + providerType + "'");
+	}
 }
+
+
+module.exports = create

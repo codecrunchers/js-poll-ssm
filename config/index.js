@@ -1,6 +1,6 @@
 /* eslint-disable global-require, import/no-dynamic-require */
-const logger = require('../src/logger')
 'use strict'
+const logger = require('../src/logger') //TODO: Nasty, is NODE_PATH cross platform?
 
 let config
 if (process.env.NODE_ENV === 'development') {

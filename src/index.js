@@ -1,7 +1,13 @@
 'use strict'
-require('./store.providerfactory.js')
+const logger = require('./logger')
 const store = require('./store.js')
-setTimeout(()=>{
-    console.log('\r\n->'+store.get('THE_KEY'))
+const createProvider = require('./store.providerfactory.js')
+
+createProvider({})
+
+setTimeout(() => {
+    logger.debug({
+            obj: store.get('THE_KEY')
+        },
+        'Retrieved THE_KEY')
 }, 10000)
-module.exports.store = store
