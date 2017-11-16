@@ -9,11 +9,13 @@ var params = {
     WithDecryption: true || false
 };
 
-logger.debug({
+logger.info({
     obj: config.pollTime
 }, 'Poll Interval Set To:')
 
 function pollFunc() {
+    logger.info('Polling..')
+
     aws.getParametersByPath(params, function(err, data) {
         if (err) {
             logger.error('Failed fetching key %s', err.stack); // an error occurred:
