@@ -26,15 +26,15 @@ function ProviderFactory(options) {
             if (providerType === REDIS_PROVIDER) {
                 require('../provider/redis')
             } else if (providerType === AWS_PROVIDER) {
-                require('../provider/aws')
-            } else {
+				require('../provider/aws')({
+					config:config,
+					logger:logger
+				})
+			} else {
                 logger.error("Cannot Create Provider")
                 throw new Error("Invalid Provider Specified '" + providerType + "'");
             }
-
-
         }
-    }
-
+	}   
 }
 module.exports = ProviderFactory
