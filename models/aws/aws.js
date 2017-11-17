@@ -7,6 +7,9 @@ const aws_secure_config = {
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     region: config.region
 }
+
+
+
 const client = new AWS.SSM(aws_secure_config)
 
 module.exports = client
