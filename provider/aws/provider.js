@@ -4,6 +4,8 @@ const config = require('config')
 const aws = require('models/aws')
 var inherits = require('util').inherits;
 var EventEmitter = require('events').EventEmitter;
+
+//The Keys we are searching for
 const awsParams = {
     Path: config.keyPrefix,
     WithDecryption: true || false
@@ -35,12 +37,26 @@ ParameterProvider.prototype.stop = function stop() {
 
 ParameterProvider.prototype.poll = function poll() {
     var self = this
-    aws.getParametersByPath(awsParams, function(err, data) {
-        if (err) {
-            self.emit('error', err); // an error occurred:
-        } else {
-            self.emit('update', data.Parameters)
+    FetchParameters().then(
+        data => {
+            self.emit('update', data)
+        },
+        err => {
+            self.emit('error', err)
         }
+    )
+}
+
+
+function FetchParameters() {
+    return new Promise((resolve, reject) => {
+        aws.getParametersByPath(awsParams, function(err, data) {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(data.Parameters)
+            }
+        })
     })
 }
 

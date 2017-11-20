@@ -8,7 +8,7 @@ const AWS_PROVIDER = 'aws'
 const providerType = config.providerType.toLowerCase()
 
 module.exports = {
-    create: function() {
+    create: function () {
         logger.debug({
             obj: providerType
         }, 'Initialising Provider')
@@ -18,8 +18,8 @@ module.exports = {
         } else if (providerType === AWS_PROVIDER) {
             return require('provider/aws')
         } else {
-            logger.error("Cannot Create Provider")
-            throw new Error("Invalid Provider Specified '" + providerType + "'");
+            logger.error('Cannot Create Provider')
+            throw new Error('Invalid Provider Specified: ' + providerType)
         }
     }
 }

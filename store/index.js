@@ -2,21 +2,25 @@
 const logger = require('logger')
 const config = require('config')
 var Map = require('collections/map')
+const KEY_INDEX = 0
+const VALUE_INDEX = 1
+const KEY_DELIM = "/"
+
 
 module.exports = {
     set: function(parameters) {
         let filteredParams = filterParamStoreKeys(parameters)
-        for (var _envCount = 0; _envCount < filteredParams.length; _envCount++) {
-            setEnvironmentVariable(filteredParams[_envCount])
+        for (var _envVarIndex = 0; _envVarIndex < filteredParams.length; _envVarIndex++) {
+            setEnvironmentVariable(filteredParams[_envVarIndex])
         }
     }
 }
 
 
 function setEnvironmentVariable(keyValueArray) {
-    let _key = keyValueArray[0]
-    _key = _key.substr(_key.lastIndexOf("/") + 1)
-    let _val = keyValueArray[1]
+    let _key = keyValueArray[KEY_INDEX]
+    _key = _key.substr(_key.lastIndexOf(KEY_DELIM) + 1)
+    let _val = keyValueArray[VALUE_INDEX]
     process.env[_key] = _val
     logger.debug({
             key: _key,
