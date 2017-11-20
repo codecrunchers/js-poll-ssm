@@ -1,11 +1,4 @@
-//'use strict'
-var logger = require('./logger')
-var config = require('../config')
-
-var providerFactory = require('./store.providerfactory.js')({
-    logger: logger,
-    config: config
-})
-
+'use strict'
+var providerFactory = require('src/store.providerfactory.js')
 providerFactory.create({})
 

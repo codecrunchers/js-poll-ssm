@@ -1,5 +1,5 @@
 'use strict'
-const logger = require('./logger')
+const logger = require('logger')
 var Dict = require('collections/dict')
 var Map = require('collections/map')
 const config = require('../config')

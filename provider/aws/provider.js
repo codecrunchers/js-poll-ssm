@@ -1,8 +1,8 @@
 'use strict'
-const aws = require('../../models/aws')
-const config = require('../../config')
-const store = require('../../src/store')
-const logger = require('../../src/logger')
+const logger = require('logger')
+const config = require('config')
+const aws = require('models/aws')
+const store = require('src/store')
 
 const params = {
     Path: config.keyPrefix,

@@ -1,40 +1,26 @@
 /* eslint-disable global-require */
 'use strict'
+const logger = require('logger')
+const config = require('config')
 const REDIS_PROVIDER = 'redis'
 const AWS_PROVIDER = 'aws'
 
+const providerType = config.providerType.toLowerCase()
 
-function ProviderFactory(options) {
-    var logger
-    var config
+module.exports = {
+    create: function() {
+        logger.debug({
+            obj: providerType
+        }, 'Initialising Provider')
 
-    if (!options.logger || !options.config) {
-        throw new Error("Pass both a logger and config object")
-    }
-
-    logger = options.logger
-    config = options.config
-    const providerType = config.providerType.toLowerCase()
-
-
-    return {
-        create: function() {
-            logger.debug({
-                obj: providerType
-            }, 'Initialising Provider')
-
-            if (providerType === REDIS_PROVIDER) {
-                require('../provider/redis')
-            } else if (providerType === AWS_PROVIDER) {
-				require('../provider/aws')({
-					config:config,
-					logger:logger
-				})
-			} else {
-                logger.error("Cannot Create Provider")
-                throw new Error("Invalid Provider Specified '" + providerType + "'");
-            }
+        if (providerType === REDIS_PROVIDER) {
+            require('provider/redis')
+        } else if (providerType === AWS_PROVIDER) {
+            require('provider/aws')
+        } else {
+            logger.error("Cannot Create Provider")
+            throw new Error("Invalid Provider Specified '" + providerType + "'");
         }
-	}   
+    }
 }
-module.exports = ProviderFactory
+

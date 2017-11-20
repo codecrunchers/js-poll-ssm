@@ -1,16 +1,25 @@
 /* eslint-disable global-require, import/no-dynamic-require */
-'use strict'
-const logger = require('../src/logger') //TODO: Nasty, is NODE_PATH cross platform?
+'ue strict'
+const logger = require('logger')
 
-let config
+const providerType = process.env.PROVIDER_TYPE
+var config
 if (process.env.NODE_ENV === 'development') {
+
     config = require('dotenv').config({
         silent: true
     }).parsed
+    logger.debug({
+        obj: config
+    }, 'Loaded from Local .env file')
+
 } else {
-    const providerType = process.env.PROVIDER_TYPE
     try {
         config = require(`./${providerType}`)
+        logger.debug({
+            obj: config
+        }, 'Loaded from Env')
+
     } catch (ex) {
         if (ex.code === 'MODULE_NOT_FOUND') {
             throw new Error('No config for process ' + providerType)
@@ -18,9 +27,4 @@ if (process.env.NODE_ENV === 'development') {
         throw ex
     }
 }
-
-logger.debug({
-    obj: config
-}, 'Config Dump')
-
 module.exports = config
