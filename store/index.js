@@ -1,26 +1,36 @@
 'use strict'
 const logger = require('logger')
 const config = require('config')
-
-var Dict = require('collections/dict')
 var Map = require('collections/map')
 
-
 module.exports = {
-    dict: new Dict({}),
     set: function(parameters) {
-        logger.debug({obj : parameters},'Set Values')
-        let filteredParams = parameters.map((param, index, params) => {
-            var entry = []
-            entry.add(param.Name)
-            entry.add(param.Value)
-            return entry
-        })
-        //const paramMap = new Map(filteredParams)
-        module.exports.dict.addEach(filteredParams)
-    },
-    get: function(key) {
-        logger.debug('Get %s', key)
-        return module.exports.dict.get(config.keyPrefix + key) 
+        let filteredParams = filterParamStoreKeys(parameters)
+        for (var _envCount = 0; _envCount < filteredParams.length; _envCount++) {
+            setEnvironmentVariable(filteredParams[_envCount])
+        }
     }
+}
+
+
+function setEnvironmentVariable(keyValueArray) {
+    let _key = keyValueArray[0]
+    _key = _key.substr(_key.lastIndexOf("/") + 1)
+    let _val = keyValueArray[1]
+    process.env[_key] = _val
+    logger.debug({
+            key: _key,
+            value: _val
+        },
+        'Set')
+}
+
+
+function filterParamStoreKeys(parameters) {
+    return parameters.map((param, index, params) => {
+        let entry = []
+        entry.add(param.Name)
+        entry.add(param.Value)
+        return entry
+    })
 }

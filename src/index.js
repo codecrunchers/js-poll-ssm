@@ -3,7 +3,7 @@ const logger = require('logger')
 const paramStore = require('store')
 const ParamProvider = require('src/store.providerfactory.js').create({})
 var paramProvider = ParamProvider()
-paramProvider.on('update', (data) => logger.info(data))
+paramProvider.on('update', (data) => paramStore.set(data))
 
 paramProvider.on('uncaughtException', (e) => logger.error({
     obj: e

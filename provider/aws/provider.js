@@ -35,10 +35,9 @@ ParameterProvider.prototype.stop = function stop() {
 
 ParameterProvider.prototype.poll = function poll() {
     var self = this
-
     aws.getParametersByPath(awsParams, function(err, data) {
         if (err) {
-            self.emit('error', err.stack); // an error occurred:
+            self.emit('error', err); // an error occurred:
         } else {
             self.emit('update', data.Parameters)
         }
