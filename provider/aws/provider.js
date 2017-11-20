@@ -2,33 +2,47 @@
 const logger = require('logger')
 const config = require('config')
 const aws = require('models/aws')
-const store = require('store')
-
-const params = {
+var inherits = require('util').inherits;
+var EventEmitter = require('events').EventEmitter;
+const awsParams = {
     Path: config.keyPrefix,
     WithDecryption: true || false
 };
 
-function pollFunc() {
-    logger.info('Polling..')
+function ParameterProvider() {
+    if (!(this instanceof ParameterProvider)) return new ParameterProvider();
+    this._started = false;
+    EventEmitter.call(this);
+}
 
-    aws.getParametersByPath(params, function(err, data) {
+inherits(ParameterProvider, EventEmitter)
+
+ParameterProvider.prototype.start = function start() {
+    logger.debug('Starting Parameter Poll')
+    var self = this
+    if (self._started) return
+    self._started = true
+
+    self._pollInterval = setInterval(() => self.poll(), parseInt(config.pollTime))
+    logger.debug('Started Polling..@' + config.pollTime)
+}
+
+
+ParameterProvider.prototype.stop = function stop() {
+    clearInterval(this._pollInterval)
+    this._started = false;
+}
+
+ParameterProvider.prototype.poll = function poll() {
+    var self = this
+
+    aws.getParametersByPath(awsParams, function(err, data) {
         if (err) {
-            logger.error('Failed fetching key %s', err.stack); // an error occurred:
+            self.emit('error', err.stack); // an error occurred:
         } else {
-            logger.debug(data, 'Key fetched from ParameterStore'); // an error occurred:
-            store.set(data.Parameters)
+            self.emit('update', data.Parameters)
         }
     })
 }
 
-module.exports  = (function go() {
-    pollFunc() //kick it off
-    const paramStorePoll = setInterval(() => pollFunc(), config.pollTime)
-})()
-
-logger.info({
-    obj: config.pollTime
-}, 'Poll Interval Set To:')
-
-
+module.exports = ParameterProvider

@@ -14,13 +14,12 @@ module.exports = {
         }, 'Initialising Provider')
 
         if (providerType === REDIS_PROVIDER) {
-            require('provider/redis')
+            return require('provider/redis')
         } else if (providerType === AWS_PROVIDER) {
-            require('provider/aws')
+            return require('provider/aws')
         } else {
             logger.error("Cannot Create Provider")
             throw new Error("Invalid Provider Specified '" + providerType + "'");
         }
     }
 }
-
