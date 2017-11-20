@@ -2,16 +2,12 @@
 const logger = require('logger')
 const config = require('config')
 const aws = require('models/aws')
-const store = require('src/store')
+const store = require('store')
 
 const params = {
     Path: config.keyPrefix,
     WithDecryption: true || false
 };
-
-logger.info({
-    obj: config.pollTime
-}, 'Poll Interval Set To:')
 
 function pollFunc() {
     logger.info('Polling..')
@@ -30,3 +26,9 @@ module.exports  = (function go() {
     pollFunc() //kick it off
     const paramStorePoll = setInterval(() => pollFunc(), config.pollTime)
 })()
+
+logger.info({
+    obj: config.pollTime
+}, 'Poll Interval Set To:')
+
+

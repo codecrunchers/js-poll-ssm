@@ -1,8 +1,10 @@
 'use strict'
 const logger = require('logger')
+const config = require('config')
+
 var Dict = require('collections/dict')
 var Map = require('collections/map')
-const config = require('../config')
+
 
 module.exports = {
     dict: new Dict({}),
