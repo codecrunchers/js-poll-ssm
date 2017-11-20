@@ -8,7 +8,7 @@ const AWS_PROVIDER = 'aws'
 const providerType = config.providerType.toLowerCase()
 
 module.exports = {
-    create: function () {
+    create: function() {
         logger.debug({
             obj: providerType
         }, 'Initialising Provider')
