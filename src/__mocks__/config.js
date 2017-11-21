@@ -1,5 +1,5 @@
 const config = {
-	providerType: "none"
+	providerType: 'none'
 }
 
 module.exports = config
