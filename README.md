@@ -1,6 +1,6 @@
 # Dynamic Application Config for NodeJS Apps
 
-In production, at runtime, resources outside our control may require that we adpat to these events.  Avoid redeploying your NodeJS app on AWS just to avail of new paramaters/config values.  
+In production, at runtime, resources outside our control may require that we adapt to these events.  Avoid redeploying your NodeJS app on AWS just to avail of new paramaters/config values.  
 
 Some examples:
 
