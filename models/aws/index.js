@@ -1,2 +1,3 @@
 'use strict'
-module.exports = require('./aws')
+const providerType = process.env.PROVIDER_TYPE
+module.exports = require(`./${providerType}`)
