@@ -9,9 +9,11 @@ Some examples:
 * Our thread pool size has to be increased
 * An API Token is updated
 
-In a lot of environments this requires a redepoly of an application; as these values are often embedded in the app at deploy time / compile time in the form of Environemt variables or config file. They are read once and persist until an application restart.
+In a lot of environments this requires a redepoly of an application; as these values are often embedded in the app at deploy time / compile time in the form of Environemt variables or config file. They are read once and persist until an application restart.  This is available via the excellent Netflix Hystrix, but not for JavaScript/Node.
 
 ## No code changing, we should not redeploy
+
+This pattern is described in 'Release It' - a must read bible for the professional software engineer.
  
 So now you're faced with a full pipeline release cycle, canary releases to perform that downtime free deplyoment - but there are no code changes, just config.  Time to separate that out..
 
