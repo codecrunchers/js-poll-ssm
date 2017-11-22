@@ -1,17 +1,16 @@
 'use strict'
-const logger = require('logger')
-const paramStore = require('store')
-const ParamProvider = require('src/store.providerfactory.js').create({})
-var paramProvider = ParamProvider()
+const logger = require('../logger')
+const paramStore = require('../store')
+const ParamProvider = require('./store.providerfactory.js').create({})()
 
-paramProvider.on('update', (data) => paramStore.set(data))
+ParamProvider.on('update', (data) => paramStore.set(data))
 
-paramProvider.on('uncaughtException', (e) => logger.error({
+ParamProvider.on('uncaughtException', (e) => logger.error({
     obj: e
 }, 'Uncaught Exception in ParamProvider'))
 
-paramProvider.on('error', (e) => logger.error({
+ParamProvider.on('error', (e) => logger.error({
     obj: e
 }, 'Error in ParamProvider'))
 
-paramProvider.start()
+ParamProvider.start()

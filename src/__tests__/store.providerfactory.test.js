@@ -10,21 +10,21 @@ describe('#create() Store Provider Factory', () => {
     it('should return an EventEmitter object for \'aws\'', () => {
 		var EventEmitter = require('events').EventEmitter;
 
-        jest.setMock('config', {
+        jest.setMock('../../config', {
             providerType: 'aws'
         })
-        var r = require('src/store.providerfactory.js').create({})
+        var r = require('../store.providerfactory.js').create({})()
 
-        expect(r()).toBeInstanceOf(EventEmitter)
+        expect(r).toBeInstanceOf(EventEmitter)
     })
 
     it('should throw an error for anything but aws|redis', () => {
-        jest.setMock('config', {
+        jest.setMock('../../config', {
             providerType: 'none'
         })
 
         expect(() => {
-            require('src/store.providerfactory.js').create({})
+            require('../store.providerfactory.js').create({})
         }).toThrowError('Invalid Provider Specified: none');
     })
 

@@ -1,7 +1,7 @@
 'use strict'
-const logger = require('logger')
-const config = require('config')
-const aws = require('models/aws')
+const config = require('../../config')
+const logger = require('../../logger')
+const aws = require('../../models/aws')
 var inherits = require('util').inherits;
 var EventEmitter = require('events').EventEmitter;
 

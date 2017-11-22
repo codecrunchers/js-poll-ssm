@@ -1,6 +1,6 @@
 'use strict'
-const logger = require('logger')
-const config = require('config')
+const config = require('../config')
+const logger = require('../logger')
 var Map = require('collections/map')
 const KEY_INDEX = 0
 const VALUE_INDEX = 1
