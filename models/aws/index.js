@@ -1,3 +1,4 @@
 'use strict'
-const providerType = process.env.PROVIDER_TYPE
+const config  = require('../../config')
+const providerType = config.providerType
 module.exports = require(`./${providerType}`)
