@@ -28,25 +28,37 @@ ParameterProvider.prototype.start = function start() {
 ParameterProvider.prototype.stop = function stop() {
     clearInterval(this._pollInterval)
     this._started = false;
+    logger.debug('Stopped Polling')
+
 }
 
 ParameterProvider.prototype.poll = function poll() {
     var self = this
     FetchParameters().then(
         data => {
-            process.send({
-                    'status': 'success',
-                    'data': data
-                })
+            success(data)
         },
         err => {
-            logger.error("Error fetching data from AWS", err)
-            process.send({
-                status: 'error',
-                'data': err
-            })
+            fail(err)
         }
     )
+}
+
+
+function fail(err) {
+    logger.error("Error fetching data from AWS", err)
+    process.send({
+        'type': 'error',
+        'data': err
+    })
+}
+
+function success(data) {
+    process.send({
+        'type': 'success',
+        'data': data
+    })
+
 }
 
 
