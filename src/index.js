@@ -29,13 +29,6 @@ if (cluster.isMaster) {
         logger.debug('Worker ' + _worker.process.pid + ' died with code: ' + code + ', and signal: ' + signal);
     });
 
-    setTimeout(() => {
-        worker.send({
-            type: 'shutdown'
-        });
-        worker.kill()
-    }, 10000)
-
 } else {
 
     var ParamProvider = require('./store.providerfactory.js').create({})
@@ -52,7 +45,7 @@ if (cluster.isMaster) {
 module.exports = {
     stop: function() {
         worker.send({
-            type: 'shutdown',
+            type: 'shutdown'
         })
         worker.kill()
     }
