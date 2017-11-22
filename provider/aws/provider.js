@@ -2,8 +2,6 @@
 const config = require('../../config')
 const logger = require('../../logger')
 const aws = require('../../models/aws')
-var inherits = require('util').inherits;
-var EventEmitter = require('events').EventEmitter;
 
 //The Keys we are searching for
 const awsParams = {
@@ -14,13 +12,10 @@ const awsParams = {
 function ParameterProvider() {
     if (!(this instanceof ParameterProvider)) return new ParameterProvider();
     this._started = false;
-    EventEmitter.call(this);
 }
 
-inherits(ParameterProvider, EventEmitter)
 
 ParameterProvider.prototype.start = function start() {
-    logger.debug('Starting Parameter Poll')
     var self = this
     if (self._started) return
     self._started = true
@@ -39,9 +34,11 @@ ParameterProvider.prototype.poll = function poll() {
     var self = this
     FetchParameters().then(
         data => {
-            self.emit('update', data)
+			process.send(data)
+            //self.emit('update', data)
         },
         err => {
+			console.log("Errrrrrrrrrrrrrrrrrrrror")
             self.emit('error', err)
         }
     )

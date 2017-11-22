@@ -1,16 +1,27 @@
 'use strict'
+var cluster = require('cluster')
 const logger = require('../logger')
 const paramStore = require('../store')
-const ParamProvider = require('./store.providerfactory.js').create({})()
 
-ParamProvider.on('update', (data) => paramStore.set(data))
+if (cluster.isMaster) {
+    logger.info('Spawning Child Process for Param Fetching')
 
-ParamProvider.on('uncaughtException', (e) => logger.error({
-    obj: e
-}, 'Uncaught Exception in ParamProvider'))
+    var worker = cluster.fork()
 
-ParamProvider.on('error', (e) => logger.error({
-    obj: e
-}, 'Error in ParamProvider'))
+    worker.on('message', function(message) {
+        logger.debug('Incoming from spawne process:', message)
+        paramStore.set(message)
+    });
 
-ParamProvider.start()
+    cluster.on('online', function(_worker) {
+        logger.info(_worker, 'Worker is online');
+    });
+
+    cluster.on('exit', function(_worker, code, signal) {
+        logger.debug('Worker ' + _worker.process.pid + ' died with code: ' + code + ', and signal: ' + signal);
+    });
+
+} else {
+    var ParamProvider = require('./store.providerfactory.js').create({})
+    ParamProvider.start()
+}
