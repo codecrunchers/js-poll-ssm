@@ -34,12 +34,17 @@ ParameterProvider.prototype.poll = function poll() {
     var self = this
     FetchParameters().then(
         data => {
-			process.send(data)
-            //self.emit('update', data)
+            process.send({
+                    'status': 'success',
+                    'data': data
+                })
         },
         err => {
-			console.log("Errrrrrrrrrrrrrrrrrrrror")
-            self.emit('error', err)
+            logger.error("Error fetching data from AWS", err)
+            process.send({
+                status: 'error',
+                'data': err
+            })
         }
     )
 }

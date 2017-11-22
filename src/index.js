@@ -9,8 +9,8 @@ if (cluster.isMaster) {
     var worker = cluster.fork()
 
     worker.on('message', function(message) {
-        logger.debug('Incoming from spawne process:', message)
-        paramStore.set(message)
+        logger.debug('Incoming from spawn process:', message.status)
+        paramStore.set(message.data)
     });
 
     cluster.on('online', function(_worker) {
