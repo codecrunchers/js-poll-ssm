@@ -14,7 +14,7 @@ if (cluster.isMaster) {
     });
 
     cluster.on('online', function(_worker) {
-        logger.info(_worker, 'Worker is online');
+        logger.debug(_worker, 'Worker is online');
     });
 
     cluster.on('exit', function(_worker, code, signal) {
