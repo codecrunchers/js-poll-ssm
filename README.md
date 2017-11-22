@@ -37,6 +37,6 @@ and updating the value of your Env vars
 * 3 Export  AWS_SECRET_ACCESS_KEY='your key'
 
 ```
-node src/index.js
+LOG_LEVEL=debug NODE_ENV=development node src/index.js
 ```
 
