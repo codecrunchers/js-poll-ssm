@@ -26,7 +26,7 @@ function setEnvironmentVariable(keyValueArray) {
             key: _key,
             value: _val
         },
-        'Set')
+        'Set Key/Val Pair as Env Vars')
 }
 
 

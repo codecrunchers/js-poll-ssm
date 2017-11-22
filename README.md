@@ -35,6 +35,11 @@ and updating the value of your Env vars
 * 1 Set your provider, curretly only AWS works: `PROVIDER_TYPE='aws'`
 * 2 Export  AWS_ACCESS_KEY_ID='your key'
 * 3 Export  AWS_SECRET_ACCESS_KEY='your key'
+* 4 Export your key prefix, this is the unique app path to be searched: KEY_PREFIX=/my/app/hola-mundo/ (All keys under that 'namespace' will be set as Env vars)
+* 5 Export your gobal key prefix, this is for shared app params: GLOBAL_KEY_PREFIX=/my/apps/globals/ 
+* 6 Export  POLL_TIME set a poll timer for the refresh
+
+
 
 ```
 LOG_LEVEL=debug NODE_ENV=development node src/index.js
