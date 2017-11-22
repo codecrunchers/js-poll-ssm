@@ -17,6 +17,7 @@ if (cluster.isMaster) {
             worker.send({
                 type: 'shutdown'
             })
+			worker.kill()
         }
     })
 
