@@ -2,17 +2,15 @@
 'use strict'
 const config = require('../config')
 const logger = require('../logger')
-const REDIS_PROVIDER = 'redis'
-const AWS_PROVIDER = 'aws'
 const providerType = config.providerType.toLowerCase()
 
 module.exports = {
-    create: function() {
+    create: function () {
         try {
             logger.debug('Initialising Provider:', providerType)
             return require(`../provider/${providerType}`)()
         } catch (e) {
-			logger.error("Fatal:", e)
+            logger.error('Fatal: ', e)
             throw new Error('Invalid Provider Specified: ' + providerType)
         }
     }

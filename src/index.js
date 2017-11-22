@@ -8,7 +8,7 @@ if (cluster.isMaster) {
     logger.info('Spawning Child Process for Param Fetching')
     worker = cluster.fork()
 
-    worker.on('message', function(message) {
+    worker.on('message', function (message) {
         logger.debug('Incoming from spawned process:', message.type)
         if (message.type === 'success') {
             paramStore.set(message.data)
@@ -17,24 +17,21 @@ if (cluster.isMaster) {
             worker.send({
                 type: 'shutdown'
             })
-
         }
     })
 
-    cluster.on('online', function(_worker) {
-        logger.debug('Worker is online:', _worker.id);
-    });
+    cluster.on('online', function (_worker) {
+        logger.debug('Worker is online:', _worker.id)
+    })
 
-    cluster.on('exit', function(_worker, code, signal) {
-        logger.debug('Worker ' + _worker.process.pid + ' died with code: ' + code + ', and signal: ' + signal);
-    });
-
+    cluster.on('exit', function (_worker, code, signal) {
+        logger.debug('Worker ' + _worker.process.pid + ' died with code: ' + code + ', and signal: ' + signal)
+    })
 } else {
-
     var ParamProvider = require('./store.providerfactory.js').create({})
     ParamProvider.start()
 
-    process.on('message', function(message) {
+    process.on('message', function (message) {
         if (message.type === 'shutdown') {
             logger.debug('Initiating graceful shutdown for Worker:')
             ParamProvider.stop()
@@ -43,7 +40,7 @@ if (cluster.isMaster) {
 }
 
 module.exports = {
-    stop: function() {
+    stop: function () {
         worker.send({
             type: 'shutdown'
         })
