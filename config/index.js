@@ -1,7 +1,7 @@
 /* eslint-disable global-require, import/no-dynamic-require */
 'ue strict'
 const logger = require('../logger')
-
+let config
 if (process.env.NODE_ENV === 'development') {
     config = require('dotenv').config({
         silent: true
