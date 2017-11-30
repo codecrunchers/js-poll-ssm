@@ -3,8 +3,8 @@ const logger = require('../../logger')
 const aws = require('../../models/aws')
 
 
-module.exports = () => {
-    var _interval
+module.exports = function() {
+    var interval
     var started = false
 
     const awsParams = {
@@ -12,29 +12,26 @@ module.exports = () => {
         WithDecryption: true || false
     }
 
-    const poll = () => {
+    const poll = function() {
         fetchParameters().then(
-            data => {
-                success(data)
-            },
-            err => {
-                fail(err)
-            })
+            data => success(data),
+            err => fail(err)
+        )
     }
     const fail = function(err) {
         logger.error("Error fetching data from AWS", err)
         process.send({
-            'type': 'error',
-            'data': err
+            type: 'error',
+            data: err
         })
     }
     const success = function(data) {
         process.send({
-            'type': 'success',
-            'data': data
+            type: 'success',
+            data: data
         })
     }
-    const fetchParameters = () => {
+    const fetchParameters = function() {
         return new Promise((resolve, reject) => {
             aws.getParametersByPath(awsParams, function(err, data) {
                 if (err) {
@@ -48,18 +45,18 @@ module.exports = () => {
 
     return {
         start: function() {
-            if (!started) {
-                _interval = setInterval(() => poll(), parseInt(config.pollTime))
+            if (!this.started) {
+                this.interval = setInterval(() => poll(), parseInt(config.pollTime))
                 logger.debug('Started Polling..@' + config.pollTime)
             }
-            started = true;
+            this.started = true;
         },
         stop: function() {
-            if (started) {
-                clearInterval(_interval)
+            if (this.started) {
+                clearInterval(this.interval)
                 logger.debug('Stopped Polling')
             }
-            started = false;
+            this.started = false;
         }
     }
 }

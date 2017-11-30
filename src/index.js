@@ -1,5 +1,5 @@
 'use strict'
-var cluster = require('cluster')
+const cluster = require('cluster')
 const logger = require('../logger')
 const paramStore = require('../store')
 var worker = null
